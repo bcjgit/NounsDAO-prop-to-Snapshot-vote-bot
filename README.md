@@ -45,3 +45,6 @@ Assuming that worked you now have a bot that will run every 15 minutes (unless y
 
 Congrats, and stay Nounish ⌐◨-◨ 
 
+
+### A note on security
+One downside of this, I'll admit is storing the wallet private key in plain text. If / when I have time, I'll enable the use AWS secrets manager to store that. That said, right now the idea is that even if the private key is compromised the worst you should lose is a few subdao governance tokens which shouldn't be too too big a loss (but who knows maybe they'll 🚀).
