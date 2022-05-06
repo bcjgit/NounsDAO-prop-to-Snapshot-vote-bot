@@ -1,5 +1,5 @@
 export const config = {
-  scondsBetweenRuns: 900,
+  secondsBetweenRuns: 900,
   nounsGraphQLLink:
     "https://api.thegraph.com/subgraphs/name/nounsdao/nouns-subgraph",
   space: "",

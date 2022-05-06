@@ -132,7 +132,7 @@ const pushProposalToSnapshot = async (
 export const scheduledEventLoggerHandler = async (event, context) => {
   const maybeProp = await getPropToAdd(
     config.nounsGraphQLLink,
-    config.scondsBetweenRuns
+    config.secondsBetweenRuns
   );
 
   // Nothing to do

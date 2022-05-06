@@ -111,7 +111,7 @@ const pushProposalToSnapshot = async (
   const snapshotData = {
     space: snapshotSpace,
     type: snapshotType,
-    title: `NounsDAO Prop ${proposal.id} pizza`,
+    title: `NounsDAO Prop ${proposal.id}`,
     body: String(proposal.description),
     choices: snapshotVoteChoices,
     start: Number(proposal.createdTimestamp) + propStartOffsetSeconds,
@@ -132,7 +132,7 @@ const pushProposalToSnapshot = async (
 export const scheduledEventLoggerHandler = async (event, context) => {
   const maybeProp = await getPropToAdd(
     config.nounsGraphQLLink,
-    config.scondsBetweenRuns
+    config.secondsBetweenRuns
   );
 
   // Nothing to do

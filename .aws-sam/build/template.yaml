@@ -1,13 +1,13 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: goop-dao-bot
+Description: nouns-dao-prop-to-snapshot-bot
 Transform:
 - AWS::Serverless-2016-10-31
 Resources:
   ScheduledEventLogger:
     Type: AWS::Serverless::Function
     Properties:
-      Description: A Lambda function that logs the payload of messages sent to an
-        associated SQS queue.
+      Description: A Lambda function that creates snapshot votes based on NounsDAO
+        props
       Runtime: nodejs14.x
       Architectures:
       - x86_64
@@ -16,7 +16,7 @@ Resources:
         CloudWatchEvent:
           Type: Schedule
           Properties:
-            Schedule: cron(0 * * * ? *)
+            Schedule: cron(*/15 * * * *)
       MemorySize: 128
       Timeout: 100
       CodeUri: ScheduledEventLogger

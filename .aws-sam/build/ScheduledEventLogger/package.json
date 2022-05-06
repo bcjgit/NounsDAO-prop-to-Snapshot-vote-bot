@@ -1,10 +1,9 @@
 {
-    "name": "replaced-by-user-input",
-    "description": "replaced-by-user-input",
+    "name": "nounsdao-prop-to-snapshot-bot",
+    "description": "A bot that creates snapshot votes for NounsDao props automatically",
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "@pbrianandj/nounsdao-subdao-snapshot-bot": "^1.0.1",
         "@snapshot-labs/snapshot.js": "^0.3.77",
         "axios": "^0.27.2",
         "ethers": "^5.6.4",
