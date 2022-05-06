@@ -22,6 +22,21 @@ Creates Snapshot votes for your subdao automatically when new `NounsDAO` props a
 
 #### What all the config parameters mean
 
+- `secondsBetweenRuns`: The time between runs of the job. This is based off the `cron` statement you added in `template.yml`. Probably best not to change this
+- `nounsGraphQLLink`: URL ponting to the Nouns subgraph. Again, probably best not to change this
+- \[**NEEDS VALUE**\] `space`: the name of your Snapshot space (eg: `sharkdao.eth`)
+- \[**NEEDS VALUE**\] `infuraID`: Your infura API key
+- \[**NEEDS VALUE**\] `walletPrivateKey`: Private key to a wallet containing your governance tokens (and ideally, **only** your governance tokens)
+- `ethNetwork`: Which eth chain to use (e.g. mainnet, rinkeby, etc.). Best not to change this unless you know what you're doing
+- `snapshotURL`: The URL for the Snapshot API
+- `snapshotVoteChoices`: The options users will have for their vote (E.g. For, Aginst, Abstain, or anything else you'd want to add / remove)
+- \[**NEEDS VALUE**\] `snapshotStrategy`: The Snapshot strategy (i.e. how to map token balance => vote power). This is a JSON that can be found in your Snapshot settings. If you have multiple stratgies, enter them as multiple JSON entries in the array.
+- `snapshotType`: Type of voting (e.g. single choice, multiple choice, etc.)
+- `snapshotVotingLengthSeconds`: How long the Snapshot vote should be active for. Default is 4 days.
+- `propStartOffsetSeconds`: How long after being created should the Snapshot vote be open for voting. Default is 5 minutes.
+- `moniteringURL`: A URL to call after sucessful run of the batch
+
+
 - Once you've filled out the config return to the TLD of the repo
 - Run `sam build --container`
 - Run `sam deploy --guided`
