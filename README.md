@@ -38,7 +38,7 @@ Creates Snapshot votes for your subdao automatically when new `NounsDAO` props a
 
 
 - Once you've filled out the config return to the TLD of the repo
-- Run `sam build --container`
+- Run `sam build --use-container`
 - Run `sam deploy --guided`
 
 Assuming that worked you now have a bot that will run every 15 minutes (unless you adjusted this in the `template.yml` file) and add new Snapshot votes if it detects new `NounsDAO` props. 
