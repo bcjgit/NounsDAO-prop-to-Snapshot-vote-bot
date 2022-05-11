@@ -35,13 +35,14 @@ export const checkIfSnapshotForPropAlreadyExists = async (proposal, space) => {
 
   const snapshotProposals = graphQlResult.data.data.proposals;
   if (!snapshotProposals) {
+    console.log("No proposals found for space");
     return false;
   }
 
   return (
-    snapshotProposals.filter((proposal) => {
-      return proposal.title.toLowerCase().includes(`prop ${proposal.id}`);
-    }).length === 0
+    snapshotProposals.filter((prop) => {
+      return prop.title.toLowerCase().includes(`prop ${proposal.id}`);
+    }).length  > 0
   );
 };
 
@@ -67,31 +68,31 @@ export const makeGraphQLQuery = async (graphQLQueryString, graphQLQueryURL) => {
   }
 };
 
-const getPropToAdd = async (nounsSubgraphURL, secondsSinceLastRun) => {
+const getPropToAdd = async (nounsSubgraphURL) => {
   const graphQLResult = await makeGraphQLQuery(
     `{
         proposals(orderBy: startBlock, orderDirection: desc, first: 1) {
             id
             description
             createdTimestamp
+            status
         }
      }`,
     nounsSubgraphURL
   );
 
   const mostRecentPropInfo = graphQLResult?.data.data.proposals[0];
-  if (
-    Number(mostRecentPropInfo.createdTimestamp) - getCurrentUnixTimestamp() >
-    secondsSinceLastRun
-  ) {
-    return null;
-  } else {
+
+  if (mostRecentPropInfo.status === 'PENDING' || mostRecentPropInfo.status === 'ACTIVE') {
+    console.log("Pending or active proposal detected");
     return {
       id: Number(mostRecentPropInfo.id),
       createdTimestamp: Number(mostRecentPropInfo.createdTimestamp),
       description: mostRecentPropInfo.description,
     };
   }
+
+  return null; 
 };
 
 const pushProposalToSnapshot = async (
@@ -140,7 +141,7 @@ export const scheduledEventLoggerHandler = async (event, context) => {
     if (config.moniteringURL) {
       await axios(config.moniteringURL);
     }
-    console.log("No props to add");
+    console.log("No props to add - latest prop is not pending or active");
     return {
       status: "NO_OP",
     };
@@ -151,11 +152,13 @@ export const scheduledEventLoggerHandler = async (event, context) => {
     if (config.moniteringURL) {
       await axios(config.moniteringURL);
     }
-    console.log("No props to add");
+    console.log("No props to add - snapshot already exists for prop");
     return {
       status: "NO_OP",
     };
   }
+
+  console.log(`Creating new snapshot vote in space ${config.space} for NounsDAO prop ${maybeProp.id}`)
 
   const provider = new ethers.providers.InfuraProvider(
     config.ethNetwork,
